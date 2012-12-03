@@ -110,46 +110,46 @@ carousel.dimentions = {
     return firstWidth;
   },
 
-  resetCarousel : function(){
-    var
-    doit,
-    startStopWidth = [],
-    reminderGap;
+  // resetCarousel : function(){
+  //   var
+  //   doit,
+  //   startStopWidth = [],
+  //   reminderGap;
 
-    startStopWidth.push(this.initWidth());
-    console.log(startStopWidth);
-    function stopResize(){
-      var currentMargin = parseInt($('#carousel-container').css('margin-left').replace('px',''),'');
-      var w = $('.carousel-container li').width();
-      startStopWidth.push(w);
-      if(startStopWidth.length > 2){
-        delete startStopWidth[0];
-        startStopWidth.splice(0,1);
-      }
-      reminderGap = startStopWidth[0] - startStopWidth[1];
-      var newMargin = this.carouselMarginWidth - reminderGap;
-      //console.log('start stop width: ',startStopWidth);
-      // console.log('gap: ',reminderGap);
+  //   startStopWidth.push(this.initWidth());
+  //   console.log(startStopWidth);
+  //   function stopResize(){
+  //     var currentMargin = parseInt($('#carousel-container').css('margin-left').replace('px',''),'');
+  //     var w = $('.carousel-container li').width();
+  //     startStopWidth.push(w);
+  //     if(startStopWidth.length > 2){
+  //       delete startStopWidth[0];
+  //       startStopWidth.splice(0,1);
+  //     }
+  //     reminderGap = startStopWidth[0] - startStopWidth[1];
+  //     var newMargin = this.carouselMarginWidth - reminderGap;
+  //     //console.log('start stop width: ',startStopWidth);
+  //     // console.log('gap: ',reminderGap);
       
-      // console.log('Current margin: ',currentMargin);
-      var newPosition = currentMargin + reminderGap*2;
+  //     // console.log('Current margin: ',currentMargin);
+  //     var newPosition = currentMargin + reminderGap*2;
 
-      //shit the carousel back into place
-      if(currentMargin !== 0){
-        $('#carousel-container').animate({
-           marginLeft: newPosition+'px'
-        });
-      }
-    }
-    $(window).resize(function(){
-      (function(){
-        clearTimeout(doit);
-        doit = setTimeout(function() {
-          stopResize();
-        }, 500);
-      }());
-    });
-  }
+  //     //shit the carousel back into place
+  //     if(currentMargin !== 0){
+  //       $('#carousel-container').animate({
+  //          marginLeft: newPosition+'px'
+  //       });
+  //     }
+  //   }
+  //   $(window).resize(function(){
+  //     (function(){
+  //       clearTimeout(doit);
+  //       doit = setTimeout(function() {
+  //         stopResize();
+  //       }, 500);
+  //     }());
+  //   });
+  // }
 };
 
 var wrapper = function(){
