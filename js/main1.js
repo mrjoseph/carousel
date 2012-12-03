@@ -4,71 +4,39 @@ var carousel = carousel || {};
     carousel.pagination = carousel.pagination || {};
     carousel.nav = carousel.nav || {};
 
-  carousel.controls = {
-    dirRight    : '-=',
-    dirLeft     : '+=',
-    // scrollAmout : am,
-    // speed       : ap,
-    busy        : false, //The slider is not in action at this point
-    distance    : null,
-  init : function(am,ap,min,max,max2,box){
-    var
-    scrollAmout = am,
-    speed       = ap,
-    // min         = min,
-    // max         = max,
-    // max2        = max2,
-    dirRight       = '-=',
-    dirLeft        = '+=',
-    // box         = $(box),
-    busy        = false, //The slider is not in action at this point
-    distance    = null;
-},
-   move : function(scrollAmout,dir){
-      if( !this.busy ){ //Check if the slider is busy. If its not then start sliding
+carousel.controls = {
+  move : function(){
+    this.slide = function(dir,dist){
+      //if( !this.busy ){
         $('#carousel-container').stop().animate({
-      marginLeft: dir+ this.scrollAmout+'px'
-        },this.speed,function(){
-        busy = false; // This set the slider to busy so you don't over click
+          marginLeft: dir+dist
+        },500,function(){
+       // busy = false; 
         });
-      }
-    }
-},//End of Control
+      //} 
+    }; 
+  }
+},
 
 carousel.nav = {
-  init:function(am,ap,min,max,max2,box){
+  init:function(){
     var
-    right   = '-=',
-    left    = '+=',
-    cP      = carousel.pagination,
-    pagC    = new cP.pageCount(),
-    distance,
-    moveObj = carousel.controls;
+    dirRight   = '-=',
+    dirLeft    = '+=',
+    cP         = carousel.pagination,
+    pagC       = new cP.pageCount();
+    var moveObj = new carousel.controls.move();
+    //moveObj.slide();
+    
     $('a').click(function(e){
     e.preventDefault();
+    var cP = carousel.pagination;
+    var pagC = new cP.pageCount();
     var _direction = $(this).attr('class');
+    var distance = $('#carousel-container li').width();
+    console.log(distance);
+    moveObj.slide(dirRight,distance);
 
-    distance = parseInt(box.css('margin-left').replace('px',''),'');
-  
-        if( _direction ==='right' ){
-          if( distance <= max2 ){
-            return false; // stops the slide from over sliding
-          }
-        pagC.addNo();
-        $('.number').html(cP.initNo);
-        moveObj.move(moveObj.init.dirRight);
-        console.log(moveObj.dirRight);
-
-        } else if( _direction ==='left' ){
-        if(distance >= moveObj.min){
-          return false; // stops the slide from over sliding
-        }
-        pagC.deleteNo();
-        $('.number').html(cP.initNo);
-        moveObj.move(moveObj.left);
-
-      }
-        moveObj.busy = true; //
     });
   }
 };
@@ -164,8 +132,6 @@ carousel.dimentions = {
 var wrapper = function(){
 /*Wrap the init functions in a wrapper function so they can
 be executed by both ready and resize functions*/
-var x = carousel.dimentions.init();
-carousel.controls.move(x[1],500,0,-x[2],-x[3],$('#carousel-container'));
 };
 
 

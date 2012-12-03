@@ -132,7 +132,7 @@ carousel.dimentions = {
       // console.log('gap: ',reminderGap);
       
       // console.log('Current margin: ',currentMargin);
-      var newPosition = currentMargin + reminderGap*1;
+      var newPosition = currentMargin + reminderGap*2;
 
       //shit the carousel back into place
       if(currentMargin !== 0){
