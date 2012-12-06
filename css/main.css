@@ -93,18 +93,33 @@ textarea {
 }
 .carousel-container li{
     float:left;
-    width:1200px;
+  /*  width:200px;*/
 }
 .carousel-container li img{
     width:100%;
 }
 #outside-container{
     overflow: hidden;
-    width: 70%;
+    width: 50%;
     margin: auto;
 }
-.number{
+.counter{
     float:left;
+    padding:0;
+    margin: 0;
+    list-style:none;
+    border:1px solid #ccc;
+    border-radius: 3px;
+    padding:0 5px;
+}
+.counter li{
+    display:inline-block;
+    
+}
+.controls{
+    float: left;
+    width: 100%;
+    margin-top: 10px;
 }
 /* ==========================================================================
    Media Queries
