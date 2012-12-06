@@ -48,6 +48,7 @@ carousel = {
 					$('#carousel-container').css('margin-left',0);
 					NewPageCount.addNo();
 					$('.counter .countNo').html(carousel.initNo);
+					console.log(carousel.initNo);
 			 		carousel.busy = false;
 			 	});
 			 } else
@@ -57,6 +58,7 @@ carousel = {
 				$('#carousel-container').stop().animate({marginLeft : dir+moveDistance},500,function(){
 					NewPageCount.deleteNo();
 					$('.counter .countNo').html(carousel.initNo);
+					console.log(carousel.initNo);
 			 		carousel.busy = false;
 			 	});
 			 }
@@ -66,23 +68,21 @@ carousel = {
 	initNo : 1,
 	pageCount: function(){
 		this.addNo = function(){
-			this.zeroNo();
-			return carousel.initNo ++;
+			 carousel.initNo ++;
+			 this.zeroNo();
 		};
 
 		this.deleteNo = function(){
+			carousel.initNo --;
 			this.zeroNo();
-			return carousel.initNo --;
 		};
 
 		this.zeroNo = function(){	
-			if(carousel.initNo === carousel.liNum){
-				carousel.initNo = 0;			
-			} else
-			if(carousel.initNo === 0){
-				console.log('you are now zero', carousel.liNum);
+			if(carousel.initNo === 0 || carousel.initNo === carousel.liNum){
 				carousel.initNo = carousel.liNum;
-				$('.counter .countNo').html(carousel.liNum);			
+			}
+			if(carousel.initNo > carousel.liNum){
+				carousel.initNo = 1;
 			}
 		};
 	$('.counter .countNo').html(carousel.initNo);	
