@@ -6,23 +6,19 @@
       this.options = options;
     };
 
+
   Plugin.prototype = {
     defaults: {
       _width: '50%',
       textColor: '#ffffff',
-      speed: 200
-    },
-    count : function(){
-      
-       var linumber =  this.$elem.find('li').length;
-      return linumber;
-      
+      speed: 800
     },
     init: function() {
       this.config = $.extend({}, this.defaults, this.options,this.metadata);
       this.build();
       this.nav(this.config.speed);
       this.pageCount();
+      this.getItemNumber(this.elem);
       return this;
     },
     build: function() {
@@ -60,7 +56,7 @@
       $('#outside-container').append(controls);
       $('.controls').append(leftBtn,rightBtn);
       $('.controls').append('<ul class="counter">');
-      $('.counter').append('<li class="countNo"></li><li>/</li><li class="totalNo">'+ liNum +'</li>');
+      $('.counter').append('<li class="countNo"></li><li>/</li><li class="totalNo"></li>');
 
       var
       moveLeft  = '+=',
@@ -96,6 +92,7 @@
             $('#carousel-container li:first').remove().insertAfter($('#carousel-container li:last'));
             $('#carousel-container').css('margin-left',0);
             counter.addNo();
+            
             that.busy = false;
           });
         } else
@@ -109,35 +106,32 @@
         }
       }
     },
+    getItemNumber : function(n){
+      var items = $(n).find('li').length;
+      $('.totalNo').append(items);
+      console.log(items);
+      return items;
+    },
     initNo : 1,
     pageCount: function(){
       var n = Plugin.prototype;
-      
-      this.zeroNo = function(){
-       var m = new n.count();
-       console.log(m);
-        if(n.initNo === 0 || n.initNo === n.liNum){
-          n.initNo = n.liNum;
-        }
-        if(n.initNo > n.liNum){
-          n.initNo = 1;
-        }
-        //console.log(n.initNo, that.count());
-    };
-      
+
       this.addNo = function(){
-        n.initNo ++;
+        this.resetCounter();
+        n.initNo++;
         $('.countNo').html(n.initNo);
-        this.zeroNo();
     };
-
-    this.deleteNo = function(){
-      n.initNo --;
+      this.deleteNo = function(){
+        n.initNo--;
         $('.countNo').html(n.initNo);
-        this.zeroNo();
     };
-
-        $('.counter .countNo').html(this.initNo);
+    this.resetCounter = function(){
+      if(n.initNo >= 17){
+        n.initNo = 0;
+      }
+    };
+        $('.countNo').html(this.initNo);
+        
     }
   };
 
