@@ -33,43 +33,43 @@ carousel = {
 			} else
 
 			if( direction === 'left' ){
-				carousel.move(moveLeft,moveDistance,direction);	
+				carousel.move(moveLeft,moveDistance,direction);
 			}
 			carousel.busy = true;
 		});
 	},
 	busy : false,
 	move:function(dir,moveDistance,direction){
-		var NewPageCount = new	carousel.pageCount();	
-		if( !carousel.busy ){ 
-			 if( direction ==='right' ){
+		var NewPageCount = new	carousel.pageCount();
+		if( !carousel.busy ){
+			if( direction ==='right' ){
 				$('#carousel-container').stop().animate({marginLeft : dir+moveDistance},500,function(){
 					$('#carousel-container li:first').remove().insertAfter($('#carousel-container li:last'));
 					$('#carousel-container').css('margin-left',0);
 					NewPageCount.addNo();
 					$('.counter .countNo').html(carousel.initNo);
 					console.log(carousel.initNo);
-			 		carousel.busy = false;
-			 	});
-			 } else
-			 if( direction ==='left' ){
+					carousel.busy = false;
+				});
+			} else
+			if( direction ==='left' ){
 				$('#carousel-container li:last').remove().insertBefore($('#carousel-container li:first'));
 				$('#carousel-container').css('margin-left',-moveDistance);
 				$('#carousel-container').stop().animate({marginLeft : dir+moveDistance},500,function(){
 					NewPageCount.deleteNo();
 					$('.counter .countNo').html(carousel.initNo);
 					console.log(carousel.initNo);
-			 		carousel.busy = false;
-			 	});
-			 }
+					carousel.busy = false;
+				});
+			}
 		}
 	},
 
 	initNo : 1,
 	pageCount: function(){
 		this.addNo = function(){
-			 carousel.initNo ++;
-			 this.zeroNo();
+			carousel.initNo ++;
+			this.zeroNo();
 		};
 
 		this.deleteNo = function(){
@@ -77,7 +77,7 @@ carousel = {
 			this.zeroNo();
 		};
 
-		this.zeroNo = function(){	
+		this.zeroNo = function(){
 			if(carousel.initNo === 0 || carousel.initNo === carousel.liNum){
 				carousel.initNo = carousel.liNum;
 			}
@@ -85,15 +85,15 @@ carousel = {
 				carousel.initNo = 1;
 			}
 		};
-	$('.counter .countNo').html(carousel.initNo);	
-	$('.counter .totalNo').html(carousel.liNum);	
+	$('.counter .countNo').html(carousel.initNo);
+	$('.counter .totalNo').html(carousel.liNum);
 	}
 };
 
 $(document).ready(function(){
 	carousel.resize();
 	carousel.nav();
-	carousel.pageCount();	
+	carousel.pageCount();
 });
 $(window).resize(function(){
 	carousel.resize();
