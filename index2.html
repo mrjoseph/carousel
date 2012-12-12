@@ -16,11 +16,29 @@
         <script src="js/vendor/modernizr-2.6.1.min.js"></script>
     </head>
     <body>
-        <div id="container" class="container">
-            <div id="outside-container">
-                <ul id="carousel-container" class="carousel-container">
-                    <li><img src="http://dummyimage.com/1200x600/ED0000/fff.png" /></li>
-                    <li><img src="http://dummyimage.com/1200x600/C74A7C/fff.png" /></li>
+       <ul id="carousel-container" class="carousel-container">
+                    <li><img src="images/001.jpg" /></li>
+                    <li><img src="images/002.jpg" /></li>
+                    <li><img src="images/003.jpg" /></li>
+                    <li><img src="images/004.jpg" /></li>
+                    <li><img src="images/005.jpg" /></li>
+                    <li><img src="images/006.jpg" /></li>
+                    <li><img src="images/007.jpg" /></li>
+                    <li><img src="images/008.jpg" /></li>
+                    <li><img src="images/009.jpg" /></li>
+                    <li><img src="images/010.jpg" /></li>
+                    <li><img src="images/011.jpg" /></li>
+                    <li><img src="images/012.jpg" /></li>
+                    <li><img src="images/013.jpg" /></li>
+                    <li><img src="images/014.jpg" /></li>
+                    <li><img src="images/015.jpg" /></li>
+                    <li><img src="images/016.jpg" /></li>
+                    <li><img src="images/017.jpg" /></li>
+                    <li><img src="images/018.jpg" /></li>
+                    <li><img src="images/019.jpg" /></li>
+                    <li><img src="images/020.jpg" /></li>
+
+<!--                     <li><img src="http://dummyimage.com/1200x600/C74A7C/fff.png" /></li>
                     <li><img src="http://dummyimage.com/1200x600/C74AC5/fff.png" /></li>
                     <li><img src="http://dummyimage.com/1200x600/6D4AC7/fff.png" /></li>
                     <li><img src="http://dummyimage.com/1200x600/2E56AB/fff.png" /></li>
@@ -35,37 +53,13 @@
                     <li><img src="http://dummyimage.com/1200x600/E0D209/fff.png" /></li>
                     <li><img src="http://dummyimage.com/1200x600/E07C09/fff.png" /></li>
                     <li><img src="http://dummyimage.com/1200x600/F5460C/fff.png" /></li>
-                    <li><img src="http://dummyimage.com/1200x600/7EF573/fff.png" /></li>
-
+                    <li><img src="http://dummyimage.com/1200x600/7EF573/fff.png" /></li> -->
                 </ul>
-                <div id="carousel">
-                    <div class="controls">
-                        <a href="" class="left"><span>left</span></a>
-                            <ul class="counter">
-                                <li class="countNo"></li>
-                                <li>/</li>
-                                <li class="totalNo">1</li>
-                            </ul>
-                        <a href="" class="right"><span>right</span></a>
-                </div>
-            </div>
-            </div>
-        </div>
-        <div class="message">hello world</div>
-  
-
-
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.2.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main2.js"></script>
-        <script src="js/myPlugin.js"></script>
+        <script src="js/carousel.js"></script>
        <script type="text/javascript">
-        $(document).ready(function(){
-            $('.message').myPlugin({
-                color: 'orange'
-            });
-        });
+        $('#carousel-container').carousel();
     </script>
     </body> 
 </html>

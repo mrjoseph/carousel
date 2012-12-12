@@ -9,49 +9,49 @@
 
   Plugin.prototype = {
     defaults: {
-      _width: '50%',
+      _width: '80%',
       textColor: '#ffffff',
-      speed: 800
+      speed: 200
     },
-    init: function() {
-      this.config = $.extend({}, this.defaults, this.options,this.metadata);
-      this.build();
-      this.nav(this.config.speed);
-      this.getItemNumber();
-      return this;
-    },
+    busy : false,
+    initNo : 1,
     build: function() {
       var
-      obj = this.$elem,
-      conf = this.config,
-      results = [],
-      li = obj.find('li'),
-      liNum = li.length;
-      obj.wrap('<div id="outside-container"></div>');
+      carousel  = this.$elem,
+      conf      = this.config,
+      results   = [],
+      li        = carousel.find('li'),
+      maxItems  = li.length;
+      carousel.wrap('<div id="outside-container"></div>');
       $('#outside-container').css('width',conf._width);
+
       var initlizeSize = function(){
         var
-        containerWidth = $('#outside-container').width(),
-        liNum = li.length,
-        maxWidth = liNum * containerWidth*2,
-        maxLength = maxWidth - containerWidth;
+        containerWidth  = $('#outside-container').width(),
+        maxItems        = li.length,
+        maxWidth        = maxItems * containerWidth*2,
+        maxLength       = maxWidth - containerWidth;
+
         li.width(containerWidth);
-        obj.width(maxWidth);
+        carousel.width(maxWidth);
         return results.push(containerWidth,maxWidth,maxLength);
       };
-       initlizeSize();
+
+      Plugin.prototype.maxItemNumber = maxItems;
+      Plugin.prototype.carousel = '#'+carousel.attr('id');
+      console.log(Plugin.prototype);
+      initlizeSize();
       $(window).resize(function(){
         initlizeSize();
       });
-      // obj.css('background-color',conf.bgColor);
-      // obj.css('color',conf.textColor);
-      
+
     },
     nav : function(speed){
       //buld the left / right navigation
-      var liNum = this.$elem.find('li').length;
-    
-       var controls = '<div class="controls">', leftBtn = '<a href="" class="left"><span>left</span></a>', rightBtn = '<a href="" class="right"><span>right</span></a>';
+      var
+      controls   = '<div class="controls">',
+      leftBtn    = '<a href="" class="left"><span>left</span></a>',
+      rightBtn   = '<a href="" class="right"><span>right</span></a>';
       $('#outside-container').append(controls);
       $('.controls').append(leftBtn,rightBtn);
       $('.controls').append('<ul class="counter">');
@@ -59,17 +59,13 @@
 
       var
       moveLeft  = '+=',
-      moveRight = '-=';
+      moveRight = '-=',
+      _this = this;
       $('a').click(function(e){
-        that = this;
-       // if(carousel.initNo  === carousel.liNum){ // reset it to the total number of lis
-       //   $('.counter .countNo').html('1');
-       // }
-        
-        var moveDistance = $('#carousel-container li').width();
         e.preventDefault();
-        var direction = $(this).attr('class');
-        distance = parseInt($('#carousel-container').css('margin-left').replace('px',''),'');
+        var moveDistance  = $(_this.carousel).find('li').width();
+        var direction     = $(this).attr('class');
+        distance          = parseInt($(_this.carousel).css('margin-left').replace('px',''),'');
 
         if( direction ==='right' ){
           Plugin.prototype.move(moveRight,moveDistance,direction,speed);
@@ -78,54 +74,65 @@
         if( direction === 'left' ){
           Plugin.prototype.move(moveLeft,moveDistance,direction,speed);
         }
-        that.busy = true;
+        this.busy = true;
       });
     },
-    busy : false,
     move:function(dir,moveDistance,direction,speed){
-
-      that = this;
+      var _this = this;
       if( !Plugin.prototype.busy ){
         if( direction ==='right' ){
-          $('#carousel-container').stop().animate({marginLeft : dir+moveDistance},speed,function(){
-            $('#carousel-container li:first').remove().insertAfter($('#carousel-container li:last'));
-            $('#carousel-container').css('margin-left',0);
-            that.addNo();
-            that.busy = false;
+          $(_this.carousel).stop().animate({marginLeft : dir+moveDistance},speed,function(){
+            $(_this.carousel+' li:first').remove().insertAfter($(_this.carousel+' li:last'));
+            $(_this.carousel).css('margin-left',0);
+            _this.addNo();
+            _this.busy = false;
           });
         } else
         if( direction ==='left' ){
-          $('#carousel-container li:last').remove().insertBefore($('#carousel-container li:first'));
-          $('#carousel-container').css('margin-left',-moveDistance);
-          $('#carousel-container').stop().animate({marginLeft : dir+moveDistance},speed,function(){
-            that.deleteNo();
-            that.busy = false;
+          $(_this.carousel+' li:last').remove().insertBefore($(_this.carousel+' li:first'));
+          $(_this.carousel).css('margin-left',-moveDistance);
+          $(_this.carousel).stop().animate({marginLeft : dir+moveDistance},speed,function(){
+            _this.deleteNo();
+            _this.busy = false;
           });
         }
       }
     },
     getItemNumber : function(){
-      var items = $(this.elem).find('li').length;
-      $('.totalNo').append(items);
-       $('.countNo').html(this.initNo);
-       Plugin.prototype.maxItemNumber = items;
-
+      $('.totalNo').append(this.maxItemNumber);
+      $('.countNo').html(this.initNo);
     },
-    initNo : 1,
     addNo : function(){
-        this.resetCounter();
-        this.initNo++;
-        $('.countNo').html(this.initNo);
+      this.initNo++;
+      this.resetCounter();
+      $('.countNo').html(this.initNo);
+      console.log(this.initNo);
     },
     deleteNo : function(){
-        this.initNo--;
-        $('.countNo').html(this.initNo);
+      this.resetCounter();
+      this.initNo--;
+      this.resetCounter();
+      $('.countNo').html(this.initNo);
+      console.log(this.initNo);
     },
     resetCounter : function(){
-       var maxItems = $(this.elem).find('li').length;
-      if(this.initNo >= this.maxItemNumber ){
-        this.initNo = 0;
+      if(this.initNo === 0 ){
+        console.log('this is 0');
+        this.initNo = this.maxItemNumber;
       }
+      if(this.initNo === this.maxItemNumber ){
+       this.initNo = this.maxItemNumber;
+      }
+      if(this.initNo > this.maxItemNumber){
+        this.initNo = 1;
+      }
+    },
+    init: function() {
+      this.config = $.extend({}, this.defaults, this.options,this.metadata);
+      this.build();
+      this.nav(this.config.speed);
+      this.getItemNumber();
+  return this;
     }
   },
 

@@ -100,7 +100,7 @@ textarea {
 }
 #outside-container{
     overflow: hidden;
-    width: 50%;
+    /*width: 50%;*/
     margin: auto;
 }
 .counter{
@@ -120,6 +120,7 @@ textarea {
     float: left;
     width: 100%;
     margin-top: 10px;
+    background: #ccc;
 }
 /* ==========================================================================
    Media Queries
