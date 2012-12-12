@@ -9,9 +9,9 @@
 
   Plugin.prototype = {
     defaults: {
-      _width: '80%',
+      _width: '100%',
       textColor: '#ffffff',
-      speed: 200
+      speed: 500
     },
     busy : false,
     initNo : 1,
@@ -39,7 +39,6 @@
 
       Plugin.prototype.maxItemNumber = maxItems;
       Plugin.prototype.carousel = '#'+carousel.attr('id');
-      console.log(Plugin.prototype);
       initlizeSize();
       $(window).resize(function(){
         initlizeSize();
@@ -127,11 +126,22 @@
         this.initNo = 1;
       }
     },
+    preview : function(){
+      $('.controls').append('<div class="right-preview">','<div class="left-preview">');
+      $('a').hover(function(){
+        var direction     = $(this).attr('class');
+        if( direction === 'right' ){
+          // $('.controls').find('.right-preview').
+        }
+        console.log(direction);
+      });
+    },
     init: function() {
       this.config = $.extend({}, this.defaults, this.options,this.metadata);
       this.build();
       this.nav(this.config.speed);
       this.getItemNumber();
+      this.preview();
   return this;
     }
   },

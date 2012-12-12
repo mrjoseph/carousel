@@ -111,6 +111,7 @@ textarea {
     border:1px solid #ccc;
     border-radius: 3px;
     padding:0 5px;
+    display:none;
 }
 .counter li{
     display:inline-block;
@@ -121,6 +122,28 @@ textarea {
     width: 100%;
     margin-top: 10px;
     background: #ccc;
+    position: relative;
+}
+
+.right-preview, .left-preview{
+    position: absolute;
+    width: 117px;
+    height: 60px;
+    
+    border-radius: 2px;
+    background-color:#fff;
+    -webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.57);
+    -moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.57);
+    box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.57);
+}
+.left-preview{
+    top: -77px;
+    left: 5px;
+}
+
+.right-preview{
+    top: -78px;
+    right: 6px;
 }
 /* ==========================================================================
    Media Queries
