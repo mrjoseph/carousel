@@ -111,7 +111,6 @@ textarea {
     border:1px solid #ccc;
     border-radius: 3px;
     padding:0 5px;
-    display:none;
 }
 .counter li{
     display:inline-block;
@@ -129,12 +128,13 @@ textarea {
     position: absolute;
     width: 117px;
     height: 60px;
-    
+    display:none;
     border-radius: 2px;
     background-color:#fff;
     -webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.57);
     -moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.57);
     box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.57);
+    overflow: hidden;
 }
 .left-preview{
     top: -77px;

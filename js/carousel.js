@@ -9,11 +9,11 @@
 
   Plugin.prototype = {
     defaults: {
-      _width: '100%',
+      _width: '50%',
       textColor: '#ffffff',
       speed: 500
     },
-    busy : false,
+    active : false,
     initNo : 1,
     build: function() {
       var
@@ -45,6 +45,16 @@
       });
 
     },
+    addFrameNumbers : function(){
+      var i;
+      for( i=1; i < this.carousel; i++ ){
+        $(this.carousel).find('li').attr('data-frameNo-',i);
+        console.log(i);
+        console.log(this.carousel);
+      }
+        
+      
+    },
     nav : function(speed){
       //buld the left / right navigation
       var
@@ -68,31 +78,33 @@
 
         if( direction ==='right' ){
           Plugin.prototype.move(moveRight,moveDistance,direction,speed);
+          
         } else
 
         if( direction === 'left' ){
           Plugin.prototype.move(moveLeft,moveDistance,direction,speed);
         }
-        this.busy = true;
       });
     },
     move:function(dir,moveDistance,direction,speed){
       var _this = this;
-      if( !Plugin.prototype.busy ){
+      if( !_this.active ){
+        _this.active = true;
         if( direction ==='right' ){
           $(_this.carousel).stop().animate({marginLeft : dir+moveDistance},speed,function(){
             $(_this.carousel+' li:first').remove().insertAfter($(_this.carousel+' li:last'));
             $(_this.carousel).css('margin-left',0);
             _this.addNo();
-            _this.busy = false;
+            _this.active = false;
           });
+
         } else
         if( direction ==='left' ){
           $(_this.carousel+' li:last').remove().insertBefore($(_this.carousel+' li:first'));
           $(_this.carousel).css('margin-left',-moveDistance);
           $(_this.carousel).stop().animate({marginLeft : dir+moveDistance},speed,function(){
             _this.deleteNo();
-            _this.busy = false;
+            _this.active = false;
           });
         }
       }
@@ -112,11 +124,9 @@
       this.initNo--;
       this.resetCounter();
       $('.countNo').html(this.initNo);
-      console.log(this.initNo);
     },
     resetCounter : function(){
       if(this.initNo === 0 ){
-        console.log('this is 0');
         this.initNo = this.maxItemNumber;
       }
       if(this.initNo === this.maxItemNumber ){
@@ -127,13 +137,44 @@
       }
     },
     preview : function(){
+      var
+      _this = this,
+      imageSrc;
+      this.getImageInPreview = function(dir,num){
+        imageSrc = $(_this.carousel+' li').eq(num).find('img').attr('src');
+        $('.'+dir+'-preview').append('<img src="'+imageSrc+'" style="width:100%"/>');
+      };
       $('.controls').append('<div class="right-preview">','<div class="left-preview">');
-      $('a').hover(function(){
-        var direction     = $(this).attr('class');
-        if( direction === 'right' ){
-          // $('.controls').find('.right-preview').
+
+      $('a').mouseover(function(){
+        var direction = $(this).attr('class');
+        if( direction === 'right'){
+          _this.getImageInPreview(direction,1);
+        } else
+        if ( direction === 'left' ){
+          _this.getImageInPreview(direction,-1);
         }
-        console.log(direction);
+        $('.controls').find('.'+direction+'-preview').stop().fadeIn();
+      }).mouseout(function(){
+        var direction     = $(this).attr('class');
+           $('.controls').find('.'+direction+'-preview').stop().fadeOut(function(){
+              $('.right-preview,.left-preview').find('img').remove();
+           });
+      });
+      $('a').click(function(){
+        var direction = $(this).attr('class');
+        if( direction === 'right'){
+          // setTimeout(function(){
+            $('.right-preview').find('img').remove();
+          _this.getImageInPreview(direction,1);
+          // },_this.defaults.speed);
+        } else
+        if( direction === 'left'){
+          setTimeout(function(){
+            $('.left-preview').find('img').remove();
+            _this.getImageInPreview(direction,-1);
+          },_this.defaults.speed);
+        }
       });
     },
     init: function() {
@@ -142,6 +183,7 @@
       this.nav(this.config.speed);
       this.getItemNumber();
       this.preview();
+      this.addFrameNumbers();
   return this;
     }
   },
