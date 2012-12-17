@@ -9,7 +9,7 @@
 
   Plugin.prototype = {
     defaults: {
-      _width: '50%',
+      _width: '70%',
       textColor: '#ffffff',
       speed: 500
     },
@@ -184,6 +184,20 @@
         $('.controls').fadeOut();
       });
     },
+    centerCarousel : function(elem){
+    var
+    window_height = $(window).height(),
+    window_center = window_height/2,
+    elem_height   = $(elem).height(),
+    elem_middle   = elem_height/2,
+    center_pos    = window_center - elem_middle;
+    if(window_height>elem_height){
+        $(elem).css("marginTop", center_pos);
+      } else {
+        $(elem).css("marginTop", '0');
+    }
+
+    },
     init: function() {
       this.config = $.extend({}, this.defaults, this.options,this.metadata);
       this.build();
@@ -192,6 +206,11 @@
       this.preview();
       this.addFrameNumbers();
       this.showControls();
+      this.centerCarousel('#outside-container');
+      $(window).resize(function(){
+          this.centerCarousel('#outside-container');
+      });
+
   return this;
     }
   },
