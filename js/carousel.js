@@ -24,7 +24,6 @@
       maxItems  = li.length;
       carousel.wrap('<div id="outside-container"></div>');
       $('#outside-container').css('width',conf._width);
-
       var initlizeSize = function(){
         var
         containerWidth  = $('#outside-container').width(),
@@ -185,20 +184,21 @@
       });
     },
     centerCarousel : function(elem){
-    var
-    window_height = $(window).height(),
-    window_center = window_height/2,
-    elem_height   = $(elem).height(),
-    elem_middle   = elem_height/2,
-    center_pos    = window_center - elem_middle;
-    if(window_height>elem_height){
+      var
+      window_height = $(window).height(),
+      window_center = window_height/2,
+      elem_height = $(elem).height(),
+      elem_middle = elem_height/2,
+      center_pos = window_center - elem_middle;
+
+      if(window_height>elem_height){
         $(elem).css("marginTop", center_pos);
       } else {
         $(elem).css("marginTop", '0');
-    }
-
+      }
     },
     init: function() {
+      _this = this;
       this.config = $.extend({}, this.defaults, this.options,this.metadata);
       this.build();
       this.nav(this.config.speed);
@@ -206,9 +206,15 @@
       this.preview();
       this.addFrameNumbers();
       this.showControls();
-      this.centerCarousel('#outside-container');
+      var positionCenter = setInterval(function(){
+        _this.centerCarousel('#outside-container');
+        console.log('hello');
+      },10);
+      setTimeout(function(){
+        clearInterval(positionCenter);
+      },20);
       $(window).resize(function(){
-          this.centerCarousel('#outside-container');
+        _this.centerCarousel('#outside-container');
       });
 
   return this;

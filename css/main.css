@@ -95,16 +95,15 @@ textarea {
 }
 .carousel-container li{
     float:left;
-  /*  width:200px;*/
 }
 .carousel-container li img{
     width:100%;
 }
 #outside-container{
     overflow: hidden;
-    /*width: 50%;*/
     margin: auto;
     position: relative;
+    border-radius: 23px;
 }
 .counter{
     float:left;
