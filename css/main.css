@@ -61,29 +61,49 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+.left, .right{
+    display:block;
+    background: url('../images/40-percent.png');
+    padding:20px;
+   }
 .left{
+    float:left;    
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-bottomright: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+   }
+.right{
+    float:right;
+    margin: 0;
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.left span{
     width: 0px;
     height: 0px;
     border-style: solid;
     border-width: 20px 20px 20px 0;
     border-color: transparent #fff transparent transparent;
     display:block;
-    float: left;
-    margin: 0 10px;
 }
 
 .left span, .right span{
-    display:none;
+    display:block;
 }
-.right{
+.right span{
     width: 0px;
     height: 0px;
     border-style: solid;
     border-width: 20px 0 20px 20px;
     border-color: transparent transparent transparent #fff;
     display:block;
-    float: right;
-    margin: 0 10px;
 }
 
 
@@ -104,6 +124,9 @@ textarea {
     margin: auto;
     position: relative;
     border-radius: 23px;
+    -webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.57);
+    -moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.57);
+    box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.57);
 }
 .counter{
     float:left;
@@ -124,7 +147,7 @@ textarea {
     margin-top: 10px;
     position: absolute;
     top: 44%;
-    display:none;
+    display: block;
 }
 
 .right-preview, .left-preview{

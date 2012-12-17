@@ -15,11 +15,10 @@
     },
     active : false,
     initNo : 1,
-    build: function() {
+    build: function(callback) {
       var
       carousel  = this.$elem,
       conf      = this.config,
-      results   = [],
       li        = carousel.find('li'),
       maxItems  = li.length;
       carousel.wrap('<div id="outside-container"></div>');
@@ -33,7 +32,10 @@
 
         li.width(containerWidth);
         carousel.width(maxWidth);
-        return results.push(containerWidth,maxWidth,maxLength);
+
+        if(callback && typeof(callback) === 'function'){
+          callback();
+        }
       };
 
       Plugin.prototype.maxItemNumber = maxItems;
@@ -58,8 +60,8 @@
       //buld the left / right navigation
       var
       controls   = '<div class="controls">',
-      leftBtn    = '<a href="" class="left"><span>left</span></a>',
-      rightBtn   = '<a href="" class="right"><span>right</span></a>';
+      leftBtn    = '<a href="" class="left"><span></span></a>',
+      rightBtn   = '<a href="" class="right"><span></span></a>';
       $('#outside-container').append(controls);
       $('.controls').append(leftBtn,rightBtn);
       $('#outside-container').append('<div class="bottombar"><ul class="counter">');
@@ -75,7 +77,7 @@
         var direction     = $(this).attr('class');
         distance          = parseInt($(_this.carousel).css('margin-left').replace('px',''),'');
 
-        if( direction ==='right' ){
+        if( direction === 'right' ){
           Plugin.prototype.move(moveRight,moveDistance,direction,speed);
           
         } else
@@ -85,7 +87,7 @@
         }
       });
     },
-    move:function(dir,moveDistance,direction,speed){
+    move : function(dir,moveDistance,direction,speed){
       var _this = this;
       if( !_this.active ){
         _this.active = true;
@@ -176,7 +178,7 @@
         }
       });
     },
-    showControls:function(){
+    showControls : function(){
       $('#outside-container').on('mouseenter',function(){
         $('.controls').fadeIn();
       }).on('mouseleave', function(){
@@ -197,22 +199,17 @@
         $(elem).css("marginTop", '0');
       }
     },
-    init: function() {
+    init : function() {
       _this = this;
       this.config = $.extend({}, this.defaults, this.options,this.metadata);
-      this.build();
-      this.nav(this.config.speed);
-      this.getItemNumber();
-      this.preview();
-      this.addFrameNumbers();
-      this.showControls();
-      var positionCenter = setInterval(function(){
+      this.build(function(){
         _this.centerCarousel('#outside-container');
-        console.log('hello');
-      },10);
-      setTimeout(function(){
-        clearInterval(positionCenter);
-      },20);
+      });
+      _this.nav(this.config.speed);
+      _this.getItemNumber();
+      _this.preview();
+      _this.addFrameNumbers();
+      _this.showControls();
       $(window).resize(function(){
         _this.centerCarousel('#outside-container');
       });
