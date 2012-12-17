@@ -63,7 +63,7 @@
       rightBtn   = '<a href="" class="right"><span>right</span></a>';
       $('#outside-container').append(controls);
       $('.controls').append(leftBtn,rightBtn);
-      $('.controls').append('<ul class="counter">');
+      $('#outside-container').append('<div class="bottombar"><ul class="counter">');
       $('.counter').append('<li class="countNo"></li><li>/</li><li class="totalNo"></li>');
 
       var
@@ -146,7 +146,7 @@
       };
       $('.controls').append('<div class="right-preview">','<div class="left-preview">');
 
-      $('a').mouseover(function(){
+      $('a').mouseenter(function(){
         var direction = $(this).attr('class');
         if( direction === 'right'){
           _this.getImageInPreview(direction,1);
@@ -155,8 +155,8 @@
           _this.getImageInPreview(direction,-1);
         }
         $('.controls').find('.'+direction+'-preview').stop().fadeIn();
-      }).mouseout(function(){
-        var direction     = $(this).attr('class');
+      }).mouseleave(function(){
+        var direction = $(this).attr('class');
            $('.controls').find('.'+direction+'-preview').stop().fadeOut(function(){
               $('.right-preview,.left-preview').find('img').remove();
            });
@@ -164,10 +164,10 @@
       $('a').click(function(){
         var direction = $(this).attr('class');
         if( direction === 'right'){
-          // setTimeout(function(){
+          setTimeout(function(){
             $('.right-preview').find('img').remove();
           _this.getImageInPreview(direction,1);
-          // },_this.defaults.speed);
+          },_this.defaults.speed);
         } else
         if( direction === 'left'){
           setTimeout(function(){
@@ -177,6 +177,13 @@
         }
       });
     },
+    showControls:function(){
+      $('#outside-container').on('mouseenter',function(){
+        $('.controls').fadeIn();
+      }).on('mouseleave', function(){
+        $('.controls').fadeOut();
+      });
+    },
     init: function() {
       this.config = $.extend({}, this.defaults, this.options,this.metadata);
       this.build();
@@ -184,6 +191,7 @@
       this.getItemNumber();
       this.preview();
       this.addFrameNumbers();
+      this.showControls();
   return this;
     }
   },
